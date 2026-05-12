@@ -36,16 +36,13 @@ def get_chrome_path():
 
 def get_page_height(chrome, html_path):
     """使用 Chrome 获取页面的实际滚动高度"""
-    js_file = tempfile.NamedTemporaryFile(mode='w', suffix='.js', delete=False)
-    js_file.write("""
+    js_code = """
         const result = {
             width: Math.max(document.documentElement.scrollWidth, document.body.scrollWidth),
             height: Math.max(document.documentElement.scrollHeight, document.body.scrollHeight)
         };
         console.log('DIMENSIONS:' + JSON.stringify(result));
-    """)
-    js_file.close()
-
+    """
     try:
         result = subprocess.run(
             [
@@ -54,14 +51,14 @@ def get_page_height(chrome, html_path):
                 "--disable-gpu",
                 "--no-sandbox",
                 "--disable-dev-shm-usage",
-                "--virtual-time-budget=3000",
-                "--run-all-compositor-stages-before-draw",
-                f"--inject-javascript={js_file.name}",
+                "--single-process",
+                "--virtual-time-budget=1000",
+                f"--window-size=680,1200",
                 f"file://{os.path.abspath(html_path)}",
             ],
             capture_output=True,
             text=True,
-            timeout=15,
+            timeout=10,
         )
 
         # 从 stderr 中解析维度信息
@@ -75,8 +72,6 @@ def get_page_height(chrome, html_path):
         return {"width": 680, "height": 1200}
     except Exception:
         return {"width": 680, "height": 1200}
-    finally:
-        os.unlink(js_file.name)
 
 
 def html_to_png(html_path, output_path=None):
@@ -121,16 +116,16 @@ def html_to_png(html_path, output_path=None):
             "--disable-gpu",
             "--no-sandbox",
             "--disable-dev-shm-usage",
+            "--single-process",
             "--hide-scrollbars",
             "--disable-features=IsolateOrigins,site-per-process",
             f"--window-size=680,{window_height}",
-            "--virtual-time-budget=3000",
-            "--run-all-compositor-stages-before-draw",
+            "--virtual-time-budget=1000",
             f"--screenshot={os.path.abspath(output_path)}",
             f"file://{os.path.abspath(html_path)}",
         ]
 
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=20)
 
         if os.path.exists(output_path):
             size = os.path.getsize(output_path)
