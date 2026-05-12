@@ -18,7 +18,7 @@ OUT_DIR = os.path.join(BASE, "topic-html")
 
 # Logo 文件路径
 FARM_LOGO_PATH = os.path.join(os.path.dirname(BASE), "老乡农场 logo.png")
-WB_LOGO_PATH = os.path.join(os.path.dirname(BASE), "WK白字.png")
+WB_LOGO_PATH = os.path.join(os.path.dirname(BASE), "WK.png")
 
 # 缓存 base64 logo
 _FARM_LOGO_B64 = None

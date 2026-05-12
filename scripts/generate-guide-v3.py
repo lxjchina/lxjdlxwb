@@ -88,7 +88,7 @@ def font(size):
 LOGO_DIR = os.path.dirname(BASE)
 LOGO_FILES = {
     "wk": "WK.png",
-    "lxj": "老乡鸡 logo.png",
+    "lxj": "老乡农场 logo.png",
     "farm": "老乡农场 logo.png"
 }
 LOGO = {}
