@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>老乡农场钓虾指南</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @font-face {
+    font-family: 'SourceHanSansCN';
+    src: local('Source Han Sans CN'), local('Noto Sans CJK SC'), local('PingFang SC'), local('Microsoft YaHei');
+    font-weight: 100 900;
+  }
+
+  body {
+    font-family: 'SourceHanSansCN', 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: #E9DBCC;
+    color: #231815;
+    max-width: 680px;
+    margin: 0 auto;
+    overflow-x: hidden;
+  }
+
+  .page {
+    width: 100%;
+    background: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ===== Header ===== */
+  .header {
+    background: #008042;
+    padding: 40px 30px 35px;
+    text-align: center;
+    position: relative;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+  }
+  .header-logo {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 4px;
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+  .header h1 {
+    font-size: 40px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 4px;
+    line-height: 1.3;
+  }
+  .header h1 span {
+    display: block;
+    font-size: 20px;
+    font-weight: 500;
+    color: #FFC520;
+    margin-top: 8px;
+    letter-spacing: 2px;
+  }
+  .header-emoji {
+    font-size: 52px;
+    margin: 12px 0;
+  }
+
+  /* ===== Banner ===== */
+  .env-banner {
+    background: linear-gradient(135deg, #008042 0%, #006634 100%);
+    margin: 0 20px;
+    border-radius: 12px;
+    padding: 20px 24px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    z-index: 2;
+  }
+  .env-icon {
+    font-size: 48px;
+    flex-shrink: 0;
+  }
+  .env-info h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .env-stats {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .env-stat {
+    background: rgba(255,255,255,0.2);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .env-stat strong {
+    font-weight: 900;
+    font-size: 18px;
+    color: #FFC520;
+  }
+
+  /* ===== Section ===== */
+  .section {
+    padding: 28px 24px;
+  }
+  .section-title {
+    font-size: 24px;
+    font-weight: 900;
+    color: #008042;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .icon {
+    font-size: 26px;
+  }
+  .section-title .num {
+    background: #008042;
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* ===== Steps ===== */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .step {
+    background: #F8F5F0;
+    border-radius: 12px;
+    padding: 18px 20px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    border-left: 4px solid #008042;
+    position: relative;
+  }
+  .step-num {
+    background: #008042;
+    color: #fff;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+  .step-content h4 {
+    font-size: 17px;
+    font-weight: 700;
+    color: #231815;
+    margin-bottom: 4px;
+  }
+  .step-content p {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.6;
+  }
+  .step-content .tip {
+    background: #FFF8E7;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-top: 8px;
+    font-size: 13px;
+    color: #8B6914;
+    border-left: 3px solid #FFC520;
+  }
+
+  /* ===== Divider ===== */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #BFB08F, transparent);
+    margin: 0 24px;
+  }
+
+  /* ===== Bait Section ===== */
+  .bait-card {
+    background: linear-gradient(135deg, #FFF8E7 0%, #FFF2D6 100%);
+    border-radius: 12px;
+    padding: 20px;
+    border: 2px dashed #FFC520;
+  }
+  .bait-card h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #8B6914;
+    margin-bottom: 12px;
+  }
+  .bait-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .bait-step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+  }
+  .bait-step .emoji {
+    font-size: 22px;
+  }
+  .bait-step strong {
+    color: #008042;
+  }
+
+  /* ===== Signal Table ===== */
+  .signal-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+  .signal-table th {
+    background: #008042;
+    color: #fff;
+    padding: 12px 14px;
+    text-align: left;
+    font-weight: 700;
+  }
+  .signal-table th:first-child {
+    border-radius: 8px 0 0 0;
+  }
+  .signal-table th:last-child {
+    border-radius: 0 8px 0 0;
+  }
+  .signal-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #E9DBCC;
+    vertical-align: top;
+  }
+  .signal-table tr:last-child td {
+    border-bottom: none;
+  }
+  .signal-table tr:nth-child(even) td {
+    background: #F8F5F0;
+  }
+  .signal-wait { color: #999; }
+  .signal-ready { color: #E43828; font-weight: 700; }
+  .signal-soon { color: #FF8A00; font-weight: 600; }
+
+  /* ===== Time Chart ===== */
+  .time-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .time-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+  }
+  .time-label {
+    width: 80px;
+    text-align: right;
+    font-weight: 600;
+    color: #555;
+    flex-shrink: 0;
+  }
+  .time-bar-wrap {
+    flex: 1;
+    background: #EFEFEF;
+    height: 24px;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+  }
+  .time-bar {
+    height: 100%;
+    border-radius: 12px;
+    transition: width 0.3s;
+  }
+  .time-bar.gold { background: linear-gradient(90deg, #FFC520, #FF8A00); }
+  .time-bar.green { background: linear-gradient(90deg, #008042, #00A854); }
+  .time-bar.light { background: linear-gradient(90deg, #BFB08F, #D4C4A8); }
+  .time-bar-text {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #fff;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  }
+
+  /* ===== Tips Box ===== */
+  .tips-box {
+    background: #008042;
+    border-radius: 12px;
+    padding: 20px;
+    color: #fff;
+  }
+  .tips-box h4 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tip-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .tip-item:last-child { margin-bottom: 0; }
+  .tip-item .emoji { font-size: 16px; flex-shrink: 0; }
+
+  /* ===== Mnemonic ===== */
+  .mnemonic {
+    background: linear-gradient(135deg, #008042 0%, #006634 100%);
+    border-radius: 16px;
+    padding: 28px 24px;
+    color: #fff;
+    text-align: center;
+  }
+  .mnemonic h3 {
+    font-size: 22px;
+    font-weight: 900;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+  }
+  .mnemonic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .mnemonic-item {
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    padding: 14px 10px;
+    backdrop-filter: blur(4px);
+  }
+  .mnemonic-char {
+    font-size: 30px;
+    font-weight: 900;
+    color: #FFC520;
+    margin-bottom: 4px;
+  }
+  .mnemonic-text {
+    font-size: 14px;
+    line-height: 1.4;
+    opacity: 0.95;
+  }
+  .mnemonic-sub {
+    font-size: 15px;
+    font-weight: 700;
+    color: #FFC520;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    line-height: 1.8;
+  }
+
+  /* ===== Safety ===== */
+  .safety-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .safety-do, .safety-dont {
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .safety-do {
+    background: #F0F8F4;
+    border: 1px solid #008042;
+  }
+  .safety-dont {
+    background: #FFF0F0;
+    border: 1px solid #E43828;
+  }
+  .safety-do h4 {
+    color: #008042;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .safety-dont h4 {
+    color: #E43828;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .safety-item {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 6px;
+    padding-left: 20px;
+    position: relative;
+  }
+  .safety-do .safety-item::before {
+    content: '\2714';
+    position: absolute;
+    left: 0;
+    color: #008042;
+    font-weight: 700;
+  }
+  .safety-dont .safety-item::before {
+    content: '\2718';
+    position: absolute;
+    left: 0;
+    color: #E43828;
+    font-weight: 700;
+  }
+
+  /* ===== Equipment List ===== */
+  .equip-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .equip-item {
+    background: #F8F5F0;
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+  }
+  .equip-item .emoji {
+    font-size: 24px;
+  }
+  .equip-item span {
+    font-weight: 600;
+  }
+  .equip-item small {
+    display: block;
+    color: #888;
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  /* ===== FAQ ===== */
+  .faq-item {
+    margin-bottom: 14px;
+    border-bottom: 1px solid #EFEFEF;
+    padding-bottom: 14px;
+  }
+  .faq-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  .faq-q {
+    font-size: 15px;
+    font-weight: 700;
+    color: #008042;
+    margin-bottom: 6px;
+  }
+  .faq-a {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  /* ===== Footer ===== */
+  .footer {
+    background: #008042;
+    padding: 30px 24px;
+    text-align: center;
+    color: #fff;
+  }
+  .footer-logo {
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+  }
+  .footer p {
+    font-size: 13px;
+    opacity: 0.7;
+    line-height: 1.6;
+  }
+  .footer .brand-line {
+    width: 40px;
+    height: 3px;
+    background: #FFC520;
+    margin: 12px auto;
+    border-radius: 2px;
+  }
+
+  /* ===== Decorative ===== */
+  .deco-dots {
+    position: absolute;
+    right: -10px;
+    top: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 8px);
+    gap: 8px;
+    opacity: 0.15;
+  }
+  .deco-dot {
+    width: 8px;
+    height: 8px;
+    background: #008042;
+    border-radius: 50%;
+  }
+
+  /* ===== Bait Enhancement Table ===== */
+  .enhance-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-top: 12px;
+  }
+  .enhance-table th {
+    background: #8B6914;
+    color: #fff;
+    padding: 8px;
+    text-align: left;
+    font-weight: 600;
+  }
+  .enhance-table td {
+    padding: 8px;
+    border-bottom: 1px solid #F0E6D4;
+    vertical-align: top;
+  }
+  .enhance-table tr:nth-child(even) td {
+    background: rgba(255,248,231,0.5);
+  }
+
+  /* ===== Print/Save hint ===== */
+  @media print {
+    body { max-width: 100%; }
+    .page { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <!-- Header -->
+  <div class="header">
+    <div style="display: flex; justify-content: center; align-items: center; gap: 12px; margin-bottom: 12px;">
+      <img src="../老乡农场 logo.png" style="height: 48px; object-fit: contain; filter: brightness(0) invert(1);" alt="老乡农场">
+      <span style="color: rgba(255,255,255,0.4); font-size: 28px; font-weight: 100;">|</span>
+      <img src="../WK.png" style="height: 48px; object-fit: contain;" alt="鸡窝小助手">
+    </div>
+    <h1>
+      老乡农场钓虾指南
+      <span>鸡肠子才是 yyds！</span>
+    </h1>
+  </div>
+
+  <!-- Environment Banner -->
+  <div style="padding: 24px 20px 0;">
+    <div class="env-banner">
+      <div class="env-icon">🌾</div>
+      <div class="env-info">
+        <h3>老乡农场 · 沟渠钓虾</h3>
+        <div class="env-stats">
+          <div class="env-stat">宽 <strong>1.6</strong> 米</div>
+          <div class="env-stat">深 <strong>50</strong> cm</div>
+          <div class="env-stat">🍗 鸡肠子饵料</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 1: Equipment -->
+  <div class="section">
+    <div class="section-title">
+      <span class="num">1</span>
+      准备钓具
+    </div>
+    <div class="equip-grid">
+      <div class="equip-item">
+        <span class="emoji">🎋</span>
+        <div><span>钓竿</span><small>2-3米竹竿/碳素竿</small></div>
+      </div>
+      <div class="equip-item">
+        <span class="emoji">🧵</span>
+        <div><span>钓线</span><small>尼龙线 1.5-2米</small></div>
+      </div>
+      <div class="equip-item">
+        <span class="emoji">🪝</span>
+        <div><span>钓钩</span><small>6-8号虾钩</small></div>
+      </div>
+      <div class="equip-item">
+        <span class="emoji">🍗</span>
+        <div><span>鸡肠子</span><small>新鲜！农场特色</small></div>
+      </div>
+      <div class="equip-item">
+        <span class="emoji">🪣</span>
+        <div><span>水桶</span><small>带盖塑料桶</small></div>
+      </div>
+      <div class="equip-item">
+        <span class="emoji">🥅</span>
+        <div><span>抄网</span><small>直径 20-30cm</small></div>
+      </div>
+      <div class="equip-item">
+        <span class="emoji">🪑</span>
+        <div><span>折叠凳</span><small>久站不累</small></div>
+      </div>
+      <div class="equip-item">
+        <span class="emoji">✂️</span>
+        <div><span>小剪刀</span><small>现场处理饵料</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Step 2: Bait -->
+  <div class="section">
+    <div class="section-title">
+      <span class="num">2</span>
+      处理鸡肠子饵料
+    </div>
+    <div class="bait-card">
+      <h4>🍗 鸡肠子穿钩四步法</h4>
+      <div class="bait-steps">
+        <div class="bait-step">
+          <span class="emoji">💧</span>
+          <span><strong>清洗</strong> — 清水冲洗 2-3 遍，去杂质留腥味</span>
+        </div>
+        <div class="bait-step">
+          <span class="emoji">✂️</span>
+          <span><strong>切割</strong> — 剪成 3-5cm 小段</span>
+        </div>
+        <div class="bait-step">
+          <span class="emoji">🪝</span>
+          <span><strong>穿钩</strong> — 从一端穿入，钩尖微露 1-2mm</span>
+        </div>
+        <div class="bait-step">
+          <span class="emoji">⏱️</span>
+          <span><strong>现用</strong> — 现穿现用效果最好，20分钟换一轮</span>
+        </div>
+      </div>
+      <div class="tip" style="margin-top: 14px; background: #FFF; border-left-color: #008042; color: #008042;">
+        💡 <strong>增强秘诀：</strong>穿好钩后滴 1-2 滴香油，油脂扩散形成气味走廊，远距离诱虾效果翻倍！
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Step 3: Position -->
+  <div class="section">
+    <div class="section-title">
+      <span class="num">3</span>
+      选对钓位
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">🥇</div>
+        <div class="step-content">
+          <h4>水草丰茂处（首选！）</h4>
+          <p>小龙虾在水草根茎处栖息觅食。水草边缘内侧 10-20cm 是黄金落点。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">🥈</div>
+        <div class="step-content">
+          <h4>沟渠拐角处</h4>
+          <p>水流变缓，食物沉积。内弯处优于外弯处。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">🥉</div>
+        <div class="step-content">
+          <h4>阴凉暗处 / 进水口</h4>
+          <p>石块、倒木、树根下是虾的藏身处。进水口溶氧高、食物多。</p>
+        </div>
+      </div>
+    </div>
+    <div class="tip" style="margin-top: 14px; background: #F0F8F4; border-left-color: #008042; color: #008042; font-size: 13px; padding: 10px 14px; border-radius: 8px;">
+      🔍 <strong>看水面判断虾情：</strong>水面有小气泡持续冒出 → 水底有虾在活动。水草叶子轻微抖动 → 可能有虾在觅食。岸边有虾爪印 → 虾经常上岸。
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Step 4: Wait & Signal -->
+  <div class="section">
+    <div class="section-title">
+      <span class="num">4</span>
+      投饵等待 · 感知信号
+    </div>
+    <div class="step" style="margin-bottom: 16px;">
+      <div class="step-num">🎯</div>
+      <div class="step-content">
+        <h4>投饵要轻柔</h4>
+        <p>目测落点 → 手腕轻甩 → 缓慢放线 → 留 20-30cm 松弛 → 竿柄固定。宁近勿远，精准优先。</p>
+      </div>
+    </div>
+
+    <h4 style="font-size: 17px; font-weight: 700; margin-bottom: 10px; color: #231815;">📋 小龙虾咬钩信号识别</h4>
+    <table class="signal-table">
+      <thead>
+        <tr>
+          <th>阶段</th>
+          <th>信号</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="signal-wait">探测期</td>
+          <td>线微微抖动，竿尖轻颤</td>
+          <td class="signal-wait">❌ 完全不动</td>
+        </tr>
+        <tr>
+          <td class="signal-soon">夹持期</td>
+          <td>线被缓慢拉紧，持续下坠</td>
+          <td class="signal-soon">⏳ 再等 1-2 秒</td>
+        </tr>
+        <tr>
+          <td class="signal-ready">吞食期</td>
+          <td>线突然被快速拖入水中！</td>
+          <td class="signal-ready">✅ 立即提竿！</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top: 14px; background: #FFF8E7; border-radius: 8px; padding: 12px 16px; text-align: center; border: 2px solid #FFC520;">
+      <span style="font-size: 20px; font-weight: 900; color: #8B6914;">"抖不动，走再等，跑就提"</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Step 5: Lift -->
+  <div class="section">
+    <div class="section-title">
+      <span class="num">5</span>
+      提竿抄虾
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>确认信号</h4>
+          <p>线在"跑"而非"抖"，确认虾已吞饵。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>手腕上扬</h4>
+          <p>手腕发力快速上弹 30-45°。力道像"抖掉水珠"，不要猛甩。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>匀速收线</h4>
+          <p>感觉到重量后匀速收线，不要急拽。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>抄网接住</h4>
+          <p>虾接近水面时用抄网从下方接住，稳稳入桶！</p>
+        </div>
+      </div>
+    </div>
+    <div class="tip" style="margin-top: 14px; background: #FFF0F0; border-left-color: #E43828; color: #E43828; font-size: 13px; padding: 10px 14px; border-radius: 8px;">
+      ⚠️ <strong>摘钩安全：</strong>从虾背部中段捏住，避开两只大钳！被夹了别甩手，放水里虾会松开。
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Time Section -->
+  <div class="section">
+    <div class="section-title">
+      <span class="icon">⏰</span>
+      最佳垂钓时间
+    </div>
+    <div class="time-chart">
+      <div class="time-row">
+        <div class="time-label">5:00-7:00</div>
+        <div class="time-bar-wrap"><div class="time-bar gold" style="width:100%"><span class="time-bar-text">极佳 · 虾最活跃</span></div></div>
+      </div>
+      <div class="time-row">
+        <div class="time-label">7:00-9:00</div>
+        <div class="time-bar-wrap"><div class="time-bar green" style="width:85%"><span class="time-bar-text">很好</span></div></div>
+      </div>
+      <div class="time-row">
+        <div class="time-label">9:00-11:00</div>
+        <div class="time-bar-wrap"><div class="time-bar light" style="width:55%"><span class="time-bar-text">一般</span></div></div>
+      </div>
+      <div class="time-row">
+        <div class="time-label">11:00-15:00</div>
+        <div class="time-bar-wrap"><div class="time-bar light" style="width:30%"><span class="time-bar-text">较差 · 避开</span></div></div>
+      </div>
+      <div class="time-row">
+        <div class="time-label">15:00-17:00</div>
+        <div class="time-bar-wrap"><div class="time-bar light" style="width:55%"><span class="time-bar-text">一般</span></div></div>
+      </div>
+      <div class="time-row">
+        <div class="time-label">17:00-19:00</div>
+        <div class="time-bar-wrap"><div class="time-bar gold" style="width:100%"><span class="time-bar-text">极佳 · 黄金时段！</span></div></div>
+      </div>
+      <div class="time-row">
+        <div class="time-label">19:00-21:00</div>
+        <div class="time-bar-wrap"><div class="time-bar green" style="width:80%"><span class="time-bar-text">很好</span></div></div>
+      </div>
+    </div>
+    <div class="tip" style="margin-top: 12px; background: #F0F8F4; border-left-color: #008042; color: #008042; font-size: 13px; padding: 10px 14px; border-radius: 8px;">
+      🌟 <strong>农场推荐时段：16:30 - 19:30</strong>，光线好、温度适宜、体验最佳！
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Mnemonic -->
+  <div class="section" style="padding-top: 16px;">
+    <div class="mnemonic">
+      <h3>🦞 钓虾七字诀 🦞</h3>
+      <div class="mnemonic-grid">
+        <div class="mnemonic-item">
+          <div class="mnemonic-char">站</div>
+          <div class="mnemonic-text">选位站草边<br>轻手又轻脚</div>
+        </div>
+        <div class="mnemonic-item">
+          <div class="mnemonic-char">抛</div>
+          <div class="mnemonic-text">饵抛草边落<br>宁近不要远</div>
+        </div>
+        <div class="mnemonic-item">
+          <div class="mnemonic-char">等</div>
+          <div class="mnemonic-text">线抖不要急<br>线跑再出手</div>
+        </div>
+        <div class="mnemonic-item">
+          <div class="mnemonic-char">提</div>
+          <div class="mnemonic-text">巧劲向上抖<br>匀速慢慢收</div>
+        </div>
+        <div class="mnemonic-item">
+          <div class="mnemonic-char">抄</div>
+          <div class="mnemonic-text">虾露快下网<br>千万别手抓</div>
+        </div>
+        <div class="mnemonic-item">
+          <div class="mnemonic-char">摘</div>
+          <div class="mnemonic-text">背后来下手<br>安全记心间</div>
+        </div>
+        <div class="mnemonic-item">
+          <div class="mnemonic-char">养</div>
+          <div class="mnemonic-text">桶中加浅水<br>盖紧防逃跑</div>
+        </div>
+      </div>
+      <div class="mnemonic-sub">
+        🍗 洗两遍，剪三段，钩尖微露最划算<br>
+        现穿现用效果赞，二十分钟换一轮
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- FAQ -->
+  <div class="section">
+    <div class="section-title">
+      <span class="icon">❓</span>
+      常见问题
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Q：为什么别人钓了很多，我一上午没钓到？</div>
+      <div class="faq-a">① 位置不对（换到水草边）② 时间不对（中午最难钓）③ 动作太大（脚步声惊走虾）④ 饵料问题（换新鲜的）</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Q：饵料总被吃光但钓不到虾？</div>
+      <div class="faq-a">虾太小、钩太大。换小号钩+小段饵料，或穿钩时绑紧些避免虾轻轻一拉就掉。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Q：一有动静就提竿，总是空钩？</div>
+      <div class="faq-a">太早了！虾夹住后先拖一会儿再吞。记住"抖不动，走再等，跑就提"。</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Q：下雨天能钓吗？</div>
+      <div class="faq-a">小雨天反而更好！溶氧高虾更活跃。暴雨天别去，安全第一。</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Safety -->
+  <div class="section">
+    <div class="section-title">
+      <span class="icon">🛡️</span>
+      安全与环保
+    </div>
+    <div class="safety-grid">
+      <div class="safety-do">
+        <h4>✅ 请这样做</h4>
+        <div class="safety-item">穿防滑鞋注意脚下</div>
+        <div class="safety-item">小朋友须大人陪同</div>
+        <div class="safety-item">带走所有垃圾</div>
+        <div class="safety-item">太小的虾放生</div>
+        <div class="safety-item">适量获取留虾生路</div>
+      </div>
+      <div class="safety-dont">
+        <h4>❌ 不要这样</h4>
+        <div class="safety-item">站在沟渠陡坡边缘</div>
+        <div class="safety-item">雷雨天气出去钓</div>
+        <div class="safety-item">向沟渠丢任何物品</div>
+        <div class="safety-item">使用化学诱饵</div>
+        <div class="safety-item">破坏岸边水草植被</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-logo">老乡鸡</div>
+    <div class="brand-line"></div>
+    <p>鸡肠子配小龙虾，老乡鸡的浪漫 🦞</p>
+    <p style="margin-top: 4px; opacity: 0.5; font-size: 12px;">本指南由 WorkBuddy AI 生成 · 老乡农场专用</p>
+  </div>
+</div>
+
+</body>
+</html>
