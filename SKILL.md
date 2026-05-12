@@ -67,11 +67,12 @@ python3 html-to-png.py
 
 ### HTML 模板特点
 
-- **零外部依赖**：Logo 使用 CSS mask-image 内嵌，无 `<img>` 标签，小程序不会触发图片下载
-- **完全自包含**：单文件，内联 CSS，base64 数据内嵌
+- **零外部依赖**：Logo 使用内联 SVG，无 `<img>` 标签，小程序不会触发图片下载
+- **完全自包含**：单文件，内联 CSS + 内联 SVG，无外部资源引用
+- **浅色背景**：Header/Footer 浅绿渐变底（#F0F8F4），整体清爽，SVG logo 原色直接显示
 - **响应式**：680px 宽度，手机端预览效果最佳
-- **品牌规范**：严格遵循老乡鸡品牌色（#008042）
-- **Logo 居中**：Header 包含老乡农场 logo + WorkBuddy logo（CSS mask 方案，白色显示）
+- **品牌规范**：严格遵循老乡鸡品牌色（#008042）作为强调色
+- **Logo 居中**：Header 包含老乡农场 SVG logo + WorkBuddy SVG 图标（内联，非 img 标签）
 - **字号优化**：正文 15px、标题 24px，手机阅读清晰
 
 ---
@@ -277,7 +278,7 @@ python3 html-to-png.py
 | 项目 | 规范 |
 |------|------|
 | 主色 | #008042 |
-| 辅助色 | #BFB08F、#E9DBCC、#EFEFEF |
+| 辅助色 | #BFB08F、#E9DBCC、#F0F8F4 |
 | 深色 | #231815 |
 | 强调色 | #FFC520（金）、#E43828（红） |
 | 字体 | 思源黑体 Heavy/Bold/Medium |
