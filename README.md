@@ -6,7 +6,7 @@
 
 - **完整钓虾知识体系**：8 大模块覆盖装备、饵料、钓位、信号识别、提竿技巧、时间选择、进阶技巧、安全规范
 - **WorkBuddy 小程序适配**：HTML 自包含，图片资源 base64 内联，避免 logo 或元素丢失
-- **高清图文生成**：一键生成 2x PNG 教学长图，适配手机端预览和转发
+- **高清图文生成**：一键生成 1360px 宽的 2x PNG 教学长图，适配手机端预览和转发
 - **生成前后校验**：自动检查 HTML 资源、PNG 清晰度、非空白和完整性
 - **触发词丰富**：支持「钓龙虾技巧」「钓龙虾」「钓龙虾教学」「老乡农场钓龙虾」等多种说法
 ## 文件结构
@@ -62,7 +62,7 @@ cp -r lxjdlxwb/ <项目路径>/.workbuddy/skills/
 需要的话，我也可以给你生成一张对应主题的钓虾教学图。
 ```
 
-用户明确说「生成图片」「做一张」「发图」「要图片」「生成教学图」后，再使用下面的图片生成命令。
+用户明确说「生成图片」「做一张」「发图」「要图片」「生成教学图」后，再使用下面的图片生成命令。不要用通用 AI 图片请求替代脚本生成，否则容易出现 680px 低清图、文字糊或版式失控。
 
 ### 生成 WorkBuddy 高清教学图
 
@@ -133,7 +133,7 @@ python3 scripts/validate-workbuddy-assets.py scripts/generate-fishing-guide.html
 - **品牌规范**：严格遵循老乡鸡品牌色（#008042）
 - **Logo 居中**：Header 老乡农场 logo + 鸡窝小助手 logo 并排居中，竖线分隔
 - **字号放大**：正文 15px、章节标题 24px、七字诀 30px，手机阅读清晰
-- **高清导出**：默认 2x PNG，实际宽度约 1360px
+- **高清导出**：默认 2x PNG，实际宽度 1360px
 
 > 注意：面向 WorkBuddy 小程序交付时，请使用 `scripts/output/workbuddy-fishing-guide@2x.png`。HTML 只作为预览源和截图源。
 
@@ -142,7 +142,7 @@ python3 scripts/validate-workbuddy-assets.py scripts/generate-fishing-guide.html
 生成图发送前请确认：
 
 - `validate-workbuddy-assets.py` 输出“全部通过”
-- PNG 宽度不低于 1200px
+- PNG 宽度必须为 1360px；680px 宽的一律不合格
 - 顶部两个 logo 正常显示
 - 装备、饵料、钓位、咬钩信号、提竿、时间、口诀、安全模块完整
 - 没有截断、空白底、糊字、表格溢出

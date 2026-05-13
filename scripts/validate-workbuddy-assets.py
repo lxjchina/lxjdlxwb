@@ -116,8 +116,8 @@ def validate_png(path):
 
     img = Image.open(path).convert("RGB")
     width, height = img.size
-    if width < 1200:
-        fail(f"PNG 宽度 {width}px 偏低，建议使用 2x 导出", failures)
+    if width < 1360:
+        fail(f"PNG 宽度 {width}px 偏低，WorkBuddy 需要 2x 高清图（至少 1360px 宽）", failures)
     else:
         ok(f"PNG 宽度 {width}px，满足高清展示")
 
