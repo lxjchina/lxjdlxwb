@@ -1,0 +1,19 @@
+{
+  "name": "lxjdlxwb",
+  "version": "2.4.0",
+  "private": true,
+  "description": "老乡鸡版钓小龙虾 WorkBuddy skill",
+  "scripts": {
+    "check": "python3 scripts/check-workbuddy-ready.py",
+    "skills:list": "npx -y skills add . --list"
+  },
+  "keywords": [
+    "agent-skill",
+    "workbuddy",
+    "codex",
+    "skills",
+    "老乡鸡",
+    "钓龙虾"
+  ],
+  "license": "MIT"
+}

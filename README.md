@@ -33,7 +33,35 @@ lxjdlxwb/
     └── validate-workbuddy-assets.py
 ```
 
-## 安装
+## 使用 `skills` 快速安装
+
+本仓库根目录包含合法的 `SKILL.md`，可被 [`skills`](https://www.npmjs.com/package/skills) CLI 直接发现。
+
+先查看仓库内可安装的 skill：
+
+```bash
+npx -y skills add lxjchina/lxjdlxwb --list
+```
+
+安装到 Codex 全局 skills 目录：
+
+```bash
+npx -y skills add lxjchina/lxjdlxwb --skill lxjdlxwb -a codex -g -y
+```
+
+安装到当前项目的 Codex skills 目录：
+
+```bash
+npx -y skills add lxjchina/lxjdlxwb --skill lxjdlxwb -a codex -y
+```
+
+本地开发时可验证当前工作区是否能被 `skills` 识别：
+
+```bash
+npm run skills:list
+```
+
+## 手动安装
 
 将整个 `lxjdlxwb/` 文件夹放入 WorkBuddy skills 目录：
 
