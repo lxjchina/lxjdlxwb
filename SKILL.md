@@ -6,7 +6,7 @@ description: >
   触发词包括："老乡农场钓龙虾"、"鸡肠子钓虾"、"农场钓虾技巧"、"沟里钓小龙虾"、
   "钓虾教学"、"生成钓虾图"、"钓龙虾技巧"、"钓龙虾"、"钓龙虾教学"等。
 tags: ["老乡鸡", "小龙虾", "农场", "钓虾", "鸡肠子", "教学", "钓龙虾"]
-version: "2.1.0"
+version: "2.2.0"
 license: MIT
 ---
 
@@ -36,44 +36,105 @@ license: MIT
 
 ---
 
-## 工作流指南（HTML 版 · 推荐）
+## WorkBuddy 使用保证
 
-### 核心原则：先文字，后图片，按需生成
+本 skill 优先保障在 WorkBuddy 小程序中可稳定展示：
 
-**不要一上来就生成图片！** 用户触发 skill 时，默认回复文字版技巧总结（秒回），等用户明确要求再生成。
+- 只有用户明确要求生成图片时，才生成并发送导出的 PNG 图片；不要在普通技巧问答中主动生成图片。
+- 面向用户交付图片时，优先发送导出的 PNG，不直接依赖小程序渲染长 HTML。
+- HTML 模板必须是自包含文件：logo 使用 `data:image/png;base64` 内联，不使用 `../WK.png`、`../老乡农场 logo.png`、网络 URL 或 `file://` 资源。
+- 生成前必须校验 HTML 资源，生成后必须校验 PNG 清晰度与完整性，避免 logo 缺失、图片空白、截半张。
+- 默认导出 2x 高清 PNG，实际宽度约 1360px，适合 WorkBuddy/微信小程序内查看和转发。
+- 若校验失败，不要把图片发给用户；先修复校验项，再重新生成。
+
+## 工作流指南（WorkBuddy 版 · 推荐）
+
+### 核心原则：先文字，后高清图片，图片必须先验收
+
+**不要一上来就生成图片。** 用户触发 skill 时，默认回复文字版技巧总结（秒回），等用户明确要求再生成。若用户的问题适合配图，可以在文字答案末尾做一句轻引导，但不要直接运行生成脚本。
 
 ### 第一步：文字回复（默认）
 
 当用户询问钓虾技巧时，**直接用文字回复关键技巧**，简洁实用。不需要生成任何文件。
 
-### 第二步：生成 HTML 教学图（用户明确要求时）
+默认回复结构：
 
-当用户说「生成图片」「生成教学图」「生成钓虾图」「生成教学长图」等明确指令后，生成 HTML 并预览。
+1. 先用 3-5 条短句回答当前问题。
+2. 如果涉及步骤、信号、钓位、装备等适合可视化的内容，可以追加一句：
+
+```text
+需要的话，我也可以给你生成一张对应主题的钓虾教学图。
+```
+
+3. 用户回复「生成」「做一张」「发图」「要图片」「生成教学图」等明确意图后，再进入第二步。
+
+### 第二步：按用户问题生成 WorkBuddy 高清图（用户明确要求时）
+
+只有当用户说「生成图片」「生成教学图」「钓虾图」「教学长图」「做张图」「发我图」等明确指令后，才判断用户问题属于哪个主题，再运行可靠生成脚本：
+
+| 用户问题 | 主题参数 |
+|----------|----------|
+| 完整技巧、总览、教学长图 | `full` |
+| 钓竿/钓线/装备/工具 | `equipment` |
+| 鸡肠子/饵料/香油/穿钩 | `bait` |
+| 钓位/水草/沟渠/哪里好钓 | `position` |
+| 咬钩/看线/什么时候提 | `signal` |
+| 提竿/抄网/怎么收线 | `lift` |
+| 时间/几点/天气 | `time` |
+| 口诀/速记/新手记法 | `mnemonic` |
+| 安全/亲子/被夹/环保 | `safety` |
 
 ```bash
-# 在浏览器中打开预览（macOS）
+# 完整指南
+cd scripts/
+python3 generate-reliable.py
+
+# 示例：用户问“鸡肠子怎么挂钩”
+python3 generate-reliable.py --topic bait
+```
+
+成功后使用输出文件作为 WorkBuddy 小程序展示图：
+
+```text
+完整图：scripts/output/workbuddy-fishing-guide@2x.png
+主题图：scripts/output/workbuddy-fishing-guide-<topic>@2x.png
+```
+
+### 第三步：单独预览或导出（调试时）
+
+需要预览 HTML：
+
+```bash
 open scripts/generate-fishing-guide.html
 ```
 
-### 第三步：导出 PNG（用户明确要求时）
-
-当用户说「生成 PNG」「导出图片」「转成图片」等指令后，调用截图脚本：
+需要手动导出 PNG：
 
 ```bash
-# Chrome Headless 截图
-cd scripts/
-python3 html-to-png.py
+python3 scripts/html-to-png.py scripts/generate-fishing-guide.html scripts/output/workbuddy-fishing-guide@2x.png --scale 2
+python3 scripts/validate-workbuddy-assets.py scripts/generate-fishing-guide.html scripts/output/workbuddy-fishing-guide@2x.png
 ```
 
 ### HTML 模板特点
 
-- **零外部依赖**：Logo 使用内联 SVG，无 `<img>` 标签，小程序不会触发图片下载
-- **完全自包含**：单文件，内联 CSS + 内联 SVG，无外部资源引用
-- **浅色背景**：Header/Footer 浅绿渐变底（#F0F8F4），整体清爽，SVG logo 原色直接显示
+- **零外部依赖**：Logo 使用 base64 内联 PNG，小程序不会触发本地路径或网络图片下载
+- **完全自包含**：单文件，内联 CSS + 内联图片，无外部资源引用
+- **浅色背景**：整体使用米色纸感背景 + 老乡鸡绿强调，手机阅读清晰
 - **响应式**：680px 宽度，手机端预览效果最佳
 - **品牌规范**：严格遵循老乡鸡品牌色（#008042）作为强调色
-- **Logo 居中**：Header 包含老乡农场 SVG logo + WorkBuddy SVG 图标（内联，非 img 标签）
+- **Logo 居中**：Header 包含老乡农场 logo + WorkBuddy logo（均为 data URI）
 - **字号优化**：正文 15px、标题 24px，手机阅读清晰
+- **高清导出**：Chrome Headless 默认 2x 截图，并自动裁掉底部空白
+
+### WorkBuddy 图片验收清单
+
+生成图片后必须确认：
+
+1. `validate-workbuddy-assets.py` 输出“全部通过”。
+2. PNG 宽度不低于 1200px。
+3. 顶部能看到“老乡农场”和 WorkBuddy 两个 logo。
+4. 标题、环境条、装备、鸡肠子饵料、钓位、信号、提竿、时间、口诀、安全模块都完整显示。
+5. 没有空白大块、截断、缺 logo、文字糊成一团或表格溢出。
 
 ---
 
@@ -115,7 +176,7 @@ python3 html-to-png.py
 #### 2.1 基础装备清单
 
 ```
-必需：钓竿(2-3m)、钓线(0.3-0.5mm, 1.5-2m)、钓钩(6-8号虾钩)、鸡肠子、带盖水桶
+必需：钓竿(1-1.5m)、钓线(0.3-0.5mm, 1.2-1.8m)、钓钩(6-8号虾钩)、鸡肠子、带盖水桶
 推荐：抄网(20-30cm)、折叠凳、遮阳帽、防蚊液
 可选：防割手套、摘钩器、小剪刀、保温袋
 ```
@@ -298,11 +359,13 @@ lxjdlxwb/
 ├── references/
 │   └── 老乡鸡设计规范.md              # 品牌设计规范
 └── scripts/
-    ├── generate-fishing-guide.html   # 教学长图 HTML 模板（主文件·推荐）
+    ├── generate-fishing-guide.html   # 当前生成的自包含 HTML（由脚本重建）
+    ├── build-workbuddy-guide.py     # 重建自包含 HTML 模板（内联 logo）
     ├── generate-guide-v3.py         # PNG 生成脚本（Pillow 版）
-    ├── generate-reliable.py         # 一键生成脚本（含验证）
-    ├── html-to-png.py              # Chrome Headless 截图脚本
-    └── generate-topic-html.py      # 按主题生成 HTML 的工具脚本
+    ├── generate-reliable.py         # WorkBuddy 一键校验 + 高清生成脚本
+    ├── html-to-png.py              # Chrome Headless 2x 截图脚本
+    ├── validate-workbuddy-assets.py # HTML/PNG 完整性校验脚本
+    └── generate-topic-html.py      # 旧版分主题生成工具（保留作兼容）
 ```
 
 ---

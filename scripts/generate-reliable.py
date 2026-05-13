@@ -1,80 +1,100 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-老乡农场钓虾教学图 - 可靠生成脚本
-一键生成 + 自动验证 + 智能分割
-使用方法: python generate-reliable.py [--split]
+老乡农场钓虾教学图 - WorkBuddy 可靠生成脚本
+一键校验 HTML、生成 2x PNG、再校验 PNG 完整性。
+使用方法:
+  python3 generate-reliable.py
+  python3 generate-reliable.py --topic bait
 """
 
+import argparse
 import subprocess
 import sys
 import os
+
+TOPICS = {
+    "full": "完整指南",
+    "equipment": "装备准备",
+    "bait": "鸡肠子饵料",
+    "position": "钓位选择",
+    "signal": "咬钩信号",
+    "lift": "提竿抄虾",
+    "time": "最佳时间",
+    "mnemonic": "钓虾口诀",
+    "safety": "安全提醒",
+}
 
 def run_command(cmd, description):
     """运行命令并返回结果"""
     print(f"\n{'='*50}")
     print(f"{description}")
     print(f"{'='*50}")
-    result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+    result = subprocess.run(cmd, capture_output=True, text=True)
     print(result.stdout)
     if result.stderr:
         print(f"警告: {result.stderr}")
     return result.returncode == 0
 
 def main():
+    parser = argparse.ArgumentParser(description="生成 WorkBuddy 钓虾高清图")
+    parser.add_argument(
+        "--topic",
+        default="full",
+        choices=sorted(TOPICS.keys()),
+        help="按用户问题生成对应主题图",
+    )
+    args = parser.parse_args()
+
     base_dir = os.path.dirname(os.path.abspath(__file__))
 
     print("╔" + "="*48 + "╗")
     print("║" + " "*12 + "老乡农场钓虾教学图生成器" + " "*13 + "║")
-    print("║" + " "*10 + "Reliable Edition v3.0" + " "*17 + "║")
+    print("║" + " "*8 + "WorkBuddy Reliable Edition" + " "*13 + "║")
     print("╚" + "="*48 + "╝")
 
-    # 步骤 1: 生成图片
+    html_path = os.path.join(base_dir, "generate-fishing-guide.html")
+    suffix = "" if args.topic == "full" else f"-{args.topic}"
+    output_path = os.path.join(base_dir, "output", f"workbuddy-fishing-guide{suffix}@2x.png")
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+    # 步骤 0: 根据主题重建 HTML
     if not run_command(
-        f"cd '{base_dir}' && python3 generate-guide-v3.py",
-        "步骤 1/3: 生成教学长图"
+        [
+            sys.executable,
+            os.path.join(base_dir, "build-workbuddy-guide.py"),
+            "--topic",
+            args.topic,
+            "--output",
+            html_path,
+        ],
+        f"步骤 0/3: 生成 HTML 模板（{TOPICS[args.topic]}）"
     ):
-        print("\n✗ 图片生成失败，请检查错误信息")
+        print("\n✗ HTML 模板生成失败，请检查错误信息")
         return 1
 
-    # 步骤 2: 验证图片
-    output_path = os.path.join(base_dir, "output", "diaoxiapu_guide_v3.png")
-    if not os.path.exists(output_path):
-        print(f"\n✗ 错误: 找不到生成的图片 {output_path}")
+    # 步骤 1: 校验 HTML 资源
+    if not run_command(
+        [sys.executable, os.path.join(base_dir, "validate-workbuddy-assets.py"), html_path],
+        "步骤 1/3: 校验 WorkBuddy HTML 资源"
+    ):
+        print("\n✗ HTML 资源校验失败，请检查错误信息")
         return 1
 
-    print(f"\n{'='*50}")
-    print("步骤 2/3: 图片验证")
-    print(f"{'='*50}")
+    # 步骤 2: 高清导出 PNG
+    if not run_command(
+        [sys.executable, os.path.join(base_dir, "html-to-png.py"), html_path, output_path, "--scale", "2"],
+        "步骤 2/3: 生成高清 PNG"
+    ):
+        print("\n✗ PNG 生成失败，请检查 Chrome 或 HTML 模板")
+        return 1
 
-    # 使用 PIL 验证
-    try:
-        from PIL import Image
-        img = Image.open(output_path)
-        print(f"✓ 图片验证通过")
-        print(f"  尺寸: {img.size[0]}×{img.size[1]}px")
-        print(f"  格式: {img.format}")
-        print(f"  模式: {img.mode}")
-
-        # 检查是否需要分割
-        if img.height > 2000:
-            print(f"\n⚠ 图片高度 {img.height}px 超过 2000px")
-            print("  建议分割成多张图片以便微信分享")
-
-            # 自动分割
-            if "--split" in sys.argv or "--auto-split" in sys.argv:
-                if not run_command(
-                    f"cd '{base_dir}' && python3 split-long-image.py output/diaoxiapu_guide_v3.png output/split",
-                    "步骤 3/3: 自动分割长图"
-                ):
-                    print("\n✗ 分割失败")
-                    return 1
-            else:
-                print(f"\n提示: 添加 --split 参数可自动分割图片")
-                print(f"  命令: python generate-reliable.py --split")
-
-    except Exception as e:
-        print(f"✗ 图片验证失败: {e}")
+    # 步骤 3: 校验 PNG 清晰度与完整性
+    if not run_command(
+        [sys.executable, os.path.join(base_dir, "validate-workbuddy-assets.py"), html_path, output_path],
+        "步骤 3/3: 校验高清 PNG"
+    ):
+        print("\n✗ PNG 校验失败，请检查导出结果")
         return 1
 
     # 输出结果
@@ -82,21 +102,8 @@ def main():
     print("生成完成!")
     print(f"{'='*50}")
     print(f"\n输出文件:")
-    print(f"  长图: {output_path}")
-
-    # 检查是否有分割后的图片
-    split_dir = os.path.join(base_dir, "output", "split")
-    if os.path.exists(split_dir):
-        split_files = [f for f in os.listdir(split_dir) if f.endswith('.png')]
-        if split_files:
-            print(f"\n  分割图片 ({len(split_files)} 张):")
-            for f in sorted(split_files):
-                print(f"    - output/split/{f}")
-
-    print(f"\n验证报告:")
-    report_path = os.path.join(base_dir, "output", "validation_report.json")
-    if os.path.exists(report_path):
-        print(f"  - {report_path}")
+    print(f"  主题: {TOPICS[args.topic]} ({args.topic})")
+    print(f"  WorkBuddy 高清图: {output_path}")
 
     print(f"\n{'='*50}")
     print("✓ 所有步骤完成！")

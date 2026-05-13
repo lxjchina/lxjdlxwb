@@ -47,7 +47,7 @@ TOPICS = {
     <div class="section">
       <div class="section-title"><span class="num">1</span>准备钓具</div>
       <div class="equip-grid">
-        <div class="equip-item"><span class="emoji">🎋</span><div><span>钓竿</span><small>2-3米竹竿/碳素竿</small></div></div>
+        <div class="equip-item"><span class="emoji">🎋</span><div><span>钓竿</span><small>1-1.5米短竿</small></div></div>
         <div class="equip-item"><span class="emoji">🧵</span><div><span>钓线</span><small>尼龙线 1.5-2米</small></div></div>
         <div class="equip-item"><span class="emoji">🪝</span><div><span>钓钩</span><small>6-8号虾钩</small></div></div>
         <div class="equip-item"><span class="emoji">🍗</span><div><span>鸡肠子</span><small>新鲜！农场特色</small></div></div>
