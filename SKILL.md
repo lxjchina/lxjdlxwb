@@ -47,7 +47,7 @@ license: MIT
 - HTML 模板必须是自包含文件：logo 使用 `data:image/png;base64` 内联，不使用 `../WK.png`、`../老乡农场 logo.png`、网络 URL 或 `file://` 资源。
 - 生成前必须校验 HTML 资源，生成后必须校验 PNG 清晰度与完整性，避免 logo 缺失、图片空白、截半张。
 - 默认导出 2x 高清 PNG，实际宽度必须为 1360px，适合 WorkBuddy/微信小程序内查看和转发。
-- 仓库内置兜底成品图：`assets/workbuddy-fishing-guide@2x.png`。如果 WorkBuddy 云上环境不能执行脚本或没有 Chrome，直接发送这张图，不要改走通用生图。
+- 仓库内置兜底成品图：`assets/workbuddy-fishing-guide@2x.png` 和 `assets/workbuddy-fishing-guide-<topic>@2x.png`。如果 WorkBuddy 云上环境不能执行脚本或没有 Chrome，直接发送对应兜底图，不要改走通用生图。
 - 若校验失败，不要把图片发给用户；先修复校验项，再重新生成。
 
 ## 工作流指南（WorkBuddy 版 · 推荐）
@@ -106,8 +106,22 @@ python3 generate-reliable.py --topic bait
 如果运行环境没有 Chrome 或不能执行脚本：
 
 1. 用户要完整教学图时，直接发送 `assets/workbuddy-fishing-guide@2x.png`。
-2. 用户要分主题图时，回复用户“当前环境不能生成验收通过的 WorkBuddy 分主题高清图”，然后给文字版技巧。
+2. 用户要分主题图时，按下面映射直接发送对应兜底图。
 3. 不要伪造图片已生成，不要改用通用图片生成模型。
+
+兜底图映射：
+
+| 主题参数 | 兜底图片 |
+|----------|----------|
+| `full` | `assets/workbuddy-fishing-guide@2x.png` |
+| `equipment` | `assets/workbuddy-fishing-guide-equipment@2x.png` |
+| `bait` | `assets/workbuddy-fishing-guide-bait@2x.png` |
+| `position` | `assets/workbuddy-fishing-guide-position@2x.png` |
+| `signal` | `assets/workbuddy-fishing-guide-signal@2x.png` |
+| `lift` | `assets/workbuddy-fishing-guide-lift@2x.png` |
+| `time` | `assets/workbuddy-fishing-guide-time@2x.png` |
+| `mnemonic` | `assets/workbuddy-fishing-guide-mnemonic@2x.png` |
+| `safety` | `assets/workbuddy-fishing-guide-safety@2x.png` |
 
 ### 第三步：单独预览或导出（调试时）
 

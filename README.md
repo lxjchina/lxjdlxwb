@@ -18,7 +18,8 @@ lxjdlxwb/
 ├── WK.png                  # 鸡窝小助手 logo（白字）
 ├── 老乡农场 logo.png         # 老乡农场 logo
 ├── assets/
-│   └── workbuddy-fishing-guide@2x.png # WorkBuddy 兜底成品图（1360px）
+│   ├── workbuddy-fishing-guide@2x.png # WorkBuddy 完整兜底图（1360px）
+│   └── workbuddy-fishing-guide-<topic>@2x.png # 8 张分主题兜底图
 ├── scripts/
 │   ├── generate-fishing-guide.html   # 当前生成的自包含 HTML（由脚本重建）
 │   ├── build-workbuddy-guide.py      # 重建自包含 HTML 模板（内联 logo）
@@ -70,6 +71,14 @@ cp -r lxjdlxwb/ <项目路径>/.workbuddy/skills/
 
 ```text
 assets/workbuddy-fishing-guide@2x.png
+assets/workbuddy-fishing-guide-equipment@2x.png
+assets/workbuddy-fishing-guide-bait@2x.png
+assets/workbuddy-fishing-guide-position@2x.png
+assets/workbuddy-fishing-guide-signal@2x.png
+assets/workbuddy-fishing-guide-lift@2x.png
+assets/workbuddy-fishing-guide-time@2x.png
+assets/workbuddy-fishing-guide-mnemonic@2x.png
+assets/workbuddy-fishing-guide-safety@2x.png
 ```
 
 ### 生成 WorkBuddy 高清教学图
