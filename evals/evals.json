@@ -1,0 +1,23 @@
+{
+  "skill_name": "lxjdlxwb",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "老乡农场钓龙虾有什么技巧？",
+      "expected_output": "回复 3-5 条适合 WorkBuddy 小程序阅读的短技巧，包含鸡肠子、水草边、看线和安全提醒，不主动生成图片。",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "鸡肠子怎么挂钩？给我发一张教学图。",
+      "expected_output": "识别为 bait 主题，优先使用 assets/workbuddy-fishing-guide-bait@2x.png，不调用通用 AI 生图。",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "小朋友在沟边钓虾要注意什么？",
+      "expected_output": "回复亲子安全、沟边防滑、雷雨不钓、不要手抓大钳和环保提醒，内容短而直接。",
+      "files": []
+    }
+  ]
+}
