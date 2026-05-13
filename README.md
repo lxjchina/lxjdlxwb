@@ -24,6 +24,8 @@ lxjdlxwb/
 │   ├── fishing-knowledge.md         # 钓虾知识库
 │   ├── workbuddy-runtime.md         # 客户端/小程序交互约束
 │   └── 老乡鸡设计规范.md
+├── evals/
+│   └── evals.json                   # skill-creator 评测提示集
 └── scripts/
     ├── check-workbuddy-ready.py     # 轻量上线自检
     ├── select-guide-image.py        # 线上快速选图
@@ -119,7 +121,13 @@ python3 scripts/select-guide-image.py --text "什么时候提竿" --json
 上线或提交前先跑轻量自检：
 
 ```bash
-python3 scripts/check-workbuddy-ready.py
+npm run check
+```
+
+验证当前工作区能被 `skills` CLI 识别：
+
+```bash
+npm run skills:list
 ```
 
 重新生成某个主题图：

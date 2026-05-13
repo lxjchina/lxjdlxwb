@@ -1,11 +1,14 @@
 ---
 name: lxjdlxwb
 description: >
-  老乡鸡版钓小龙虾技巧 skill，适用于 WorkBuddy 客户端和小程序。用于回答老乡农场/沟渠钓小龙虾、
-  鸡肠子饵料、钓位、咬钩信号、提竿、安全提醒等问题；当用户明确要图片、海报、教学图或长图时，
-  优先返回仓库内置 1360px WorkBuddy 高清 PNG，而不是调用通用 AI 生图。
-tags: ["老乡鸡", "小龙虾", "农场", "钓虾", "鸡肠子", "WorkBuddy", "教学图"]
-version: "2.4.0"
+  Use this skill whenever the user asks about 老乡农场/沟渠钓龙虾 or 钓小龙虾技巧, including 鸡肠子饵料、
+  钓位、水草边、看线、咬钩信号、提竿、抄网、亲子安全、雷雨环保提醒, or asks to create/receive a 钓虾教学图、
+  海报、长图, or image for WorkBuddy. It should answer ordinary questions with concise mobile-friendly text and,
+  when the user explicitly wants an image, route to the bundled 1360px WorkBuddy PNG assets instead of generic AI image generation.
+compatibility: "Requires Python 3 for helper scripts; prebuilt PNG delivery has no Chrome or Pillow dependency."
+metadata:
+  version: "2.4.1"
+  tags: ["老乡鸡", "小龙虾", "农场", "钓虾", "鸡肠子", "WorkBuddy", "教学图"]
 license: MIT
 ---
 
@@ -56,6 +59,8 @@ license: MIT
 
 用户明确要图片时，先判断主题，再返回对应 PNG。WorkBuddy 小程序优先发送图片文件，不发送 HTML。
 
+主题、关键词和路径的源文件是 `assets/guide-images.json`。脚本可用时始终让 `scripts/select-guide-image.py` 读取该 manifest；不要手写新关键词或复制一份新的主题映射。
+
 | 主题 | 适用问题 | 图片 |
 | --- | --- | --- |
 | `full` | 完整技巧、总览、教学长图 | `assets/workbuddy-fishing-guide@2x.png` |
@@ -93,6 +98,7 @@ python3 generate-reliable.py --topic bait
 
 ## 知识与参考
 
+- 需要判断图片主题、关键词或路径时读取 `assets/guide-images.json`。
 - 需要完整钓虾知识时读取 `references/fishing-knowledge.md`。
 - 需要 WorkBuddy 客户端/小程序交互约束时读取 `references/workbuddy-runtime.md`。
 - 需要品牌颜色、字体、视觉气质时读取 `references/老乡鸡设计规范.md`。
