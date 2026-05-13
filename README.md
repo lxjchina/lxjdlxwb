@@ -79,6 +79,22 @@ cp -r lxjdlxwb/ <项目路径>/.workbuddy/skills/
 
 ## 使用方式
 
+### 在小程序里怎么用
+
+可以在 WorkBuddy 小程序对话里触发这个 skill，但小程序本身不是 skill 的安装或执行环境。请先在 WorkBuddy/Agent 运行环境安装并启用 `lxjdlxwb`，小程序用户再通过自然语言提问触发。
+
+推荐链路：
+
+```text
+小程序用户提问
+→ WorkBuddy/Agent 识别并触发 lxjdlxwb
+→ 普通问题返回短文字
+→ 明确要图时选择 assets/*.png
+→ 小程序展示文本或图片
+```
+
+小程序端只负责发送问题和展示结果，不建议直接读取 `SKILL.md`、运行 Python 脚本、执行 Chrome 截图，或渲染 `scripts/generate-fishing-guide.html`。线上图片交付优先使用仓库内置 PNG。
+
 触发示例：
 
 - `钓龙虾技巧`

@@ -9,6 +9,19 @@ WorkBuddy 客户端可以承载较完整的 Markdown，但小程序更适合短�
 - 图片交付：发送 PNG 文件，不发送 HTML。
 - 调试信息：不展示命令、路径、校验日志，除非用户明确问“产物在哪”。
 
+## 小程序使用边界
+
+小程序可以作为触发和展示入口，但不直接安装或执行 skill。正确链路是：
+
+```text
+小程序用户提问
+→ WorkBuddy/Agent 环境触发 lxjdlxwb
+→ Agent 选择短文字或内置 PNG
+→ 小程序展示结果
+```
+
+不要在小程序端直接读取 `SKILL.md`、运行 `scripts/*.py`、启动 Chrome 截图，或渲染 `scripts/generate-fishing-guide.html`。这些逻辑属于 WorkBuddy/Agent 运行环境或本地开发更新流程。
+
 ## 意图判断
 
 只问技巧时回答文字：
