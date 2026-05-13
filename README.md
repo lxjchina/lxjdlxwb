@@ -17,6 +17,8 @@ lxjdlxwb/
 ├── README.md                # 本文件
 ├── WK.png                  # 鸡窝小助手 logo（白字）
 ├── 老乡农场 logo.png         # 老乡农场 logo
+├── assets/
+│   └── workbuddy-fishing-guide@2x.png # WorkBuddy 兜底成品图（1360px）
 ├── scripts/
 │   ├── generate-fishing-guide.html   # 当前生成的自包含 HTML（由脚本重建）
 │   ├── build-workbuddy-guide.py      # 重建自包含 HTML 模板（内联 logo）
@@ -63,6 +65,12 @@ cp -r lxjdlxwb/ <项目路径>/.workbuddy/skills/
 ```
 
 用户明确说「生成图片」「做一张」「发图」「要图片」「生成教学图」后，再使用下面的图片生成命令。不要用通用 AI 图片请求替代脚本生成，否则容易出现 680px 低清图、文字糊或版式失控。
+
+如果 WorkBuddy 云上环境不能执行脚本或没有 Chrome，直接发送仓库内置成品图：
+
+```text
+assets/workbuddy-fishing-guide@2x.png
+```
 
 ### 生成 WorkBuddy 高清教学图
 
