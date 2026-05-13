@@ -6,7 +6,7 @@ description: >
   触发词包括："老乡农场钓龙虾"、"鸡肠子钓虾"、"农场钓虾技巧"、"沟里钓小龙虾"、
   "钓虾教学"、"生成钓虾图"、"钓龙虾技巧"、"钓龙虾"、"钓龙虾教学"等。
 tags: ["老乡鸡", "小龙虾", "农场", "钓虾", "鸡肠子", "教学", "钓龙虾"]
-version: "2.2.1"
+version: "2.3.0"
 license: MIT
 ---
 
@@ -48,6 +48,7 @@ license: MIT
 - 生成前必须校验 HTML 资源，生成后必须校验 PNG 清晰度与完整性，避免 logo 缺失、图片空白、截半张。
 - 默认导出 2x 高清 PNG，实际宽度必须为 1360px，适合 WorkBuddy/微信小程序内查看和转发。
 - 仓库内置兜底成品图：`assets/workbuddy-fishing-guide@2x.png` 和 `assets/workbuddy-fishing-guide-<topic>@2x.png`。如果 WorkBuddy 云上环境不能执行脚本或没有 Chrome，直接发送对应兜底图，不要改走通用生图。
+- WorkBuddy 线上默认使用 `scripts/select-guide-image.py` 快速选择兜底图；该脚本不启动 Chrome、不截图、无第三方依赖，适合快速稳定返回图片。
 - 若校验失败，不要把图片发给用户；先修复校验项，再重新生成。
 
 ## 工作流指南（WorkBuddy 版 · 推荐）
@@ -71,9 +72,40 @@ license: MIT
 
 3. 用户回复「生成」「做一张」「发图」「要图片」「生成教学图」等明确意图后，再进入第二步。
 
-### 第二步：按用户问题生成 WorkBuddy 高清图（用户明确要求时）
+### 第二步：按用户问题快速返回 WorkBuddy 高清图（用户明确要求时）
 
-只有当用户说「生成图片」「生成教学图」「钓虾图」「教学长图」「做张图」「发我图」等明确指令后，才判断用户问题属于哪个主题，再运行可靠生成脚本。不要使用通用图片生成模型替代该脚本。
+只有当用户说「生成图片」「生成教学图」「钓虾图」「教学长图」「做张图」「发我图」等明确指令后，才判断用户问题属于哪个主题，然后优先发送仓库内置 2x PNG。不要使用通用图片生成模型替代该流程。
+
+| 用户问题 | 主题参数 | 兜底图片 |
+|----------|----------|----------|
+| 完整技巧、总览、教学长图 | `full` | `assets/workbuddy-fishing-guide@2x.png` |
+| 钓竿/钓线/装备/工具 | `equipment` | `assets/workbuddy-fishing-guide-equipment@2x.png` |
+| 鸡肠子/饵料/香油/穿钩 | `bait` | `assets/workbuddy-fishing-guide-bait@2x.png` |
+| 钓位/水草/沟渠/哪里好钓 | `position` | `assets/workbuddy-fishing-guide-position@2x.png` |
+| 咬钩/看线/什么时候提 | `signal` | `assets/workbuddy-fishing-guide-signal@2x.png` |
+| 提竿/抄网/怎么收线 | `lift` | `assets/workbuddy-fishing-guide-lift@2x.png` |
+| 时间/几点/天气 | `time` | `assets/workbuddy-fishing-guide-time@2x.png` |
+| 口诀/速记/新手记法 | `mnemonic` | `assets/workbuddy-fishing-guide-mnemonic@2x.png` |
+| 安全/亲子/被夹/环保 | `safety` | `assets/workbuddy-fishing-guide-safety@2x.png` |
+
+快速稳定模式：
+
+```bash
+python3 scripts/select-guide-image.py --text "鸡肠子怎么挂钩，生成图片"
+# 输出：assets/workbuddy-fishing-guide-bait@2x.png
+```
+
+需要结构化结果时：
+
+```bash
+python3 scripts/select-guide-image.py --text "什么时候提竿" --json
+```
+
+WorkBuddy 拿到路径后直接发送该 PNG。不要再运行 Chromium、不要截图、不要解释环境问题。
+
+### 第三步：本地重新制图（仅开发/更新素材时）
+
+只有需要更新版式、文案或重新出图时，才运行可靠生成脚本：
 
 | 用户问题 | 主题参数 |
 |----------|----------|
@@ -103,27 +135,9 @@ python3 generate-reliable.py --topic bait
 主题图：scripts/output/workbuddy-fishing-guide-<topic>@2x.png
 ```
 
-如果运行环境没有 Chrome 或不能执行脚本：
+如果运行环境没有 Chrome 或不能执行截图脚本，仍然使用快速稳定模式发送 `assets/` 中的兜底图。不要伪造图片已生成，不要改用通用图片生成模型。
 
-1. 用户要完整教学图时，直接发送 `assets/workbuddy-fishing-guide@2x.png`。
-2. 用户要分主题图时，按下面映射直接发送对应兜底图。
-3. 不要伪造图片已生成，不要改用通用图片生成模型。
-
-兜底图映射：
-
-| 主题参数 | 兜底图片 |
-|----------|----------|
-| `full` | `assets/workbuddy-fishing-guide@2x.png` |
-| `equipment` | `assets/workbuddy-fishing-guide-equipment@2x.png` |
-| `bait` | `assets/workbuddy-fishing-guide-bait@2x.png` |
-| `position` | `assets/workbuddy-fishing-guide-position@2x.png` |
-| `signal` | `assets/workbuddy-fishing-guide-signal@2x.png` |
-| `lift` | `assets/workbuddy-fishing-guide-lift@2x.png` |
-| `time` | `assets/workbuddy-fishing-guide-time@2x.png` |
-| `mnemonic` | `assets/workbuddy-fishing-guide-mnemonic@2x.png` |
-| `safety` | `assets/workbuddy-fishing-guide-safety@2x.png` |
-
-### 第三步：单独预览或导出（调试时）
+### 第四步：单独预览或导出（调试时）
 
 需要预览 HTML：
 

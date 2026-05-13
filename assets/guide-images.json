@@ -1,0 +1,56 @@
+{
+  "defaultTopic": "full",
+  "imageMode": "prebuilt-assets-first",
+  "quality": {
+    "scale": "2x",
+    "width": 1360,
+    "format": "png"
+  },
+  "topics": {
+    "full": {
+      "title": "完整指南",
+      "path": "assets/workbuddy-fishing-guide@2x.png",
+      "keywords": ["完整", "总览", "全部", "教学", "长图", "指南", "攻略", "钓虾图", "生成图片"]
+    },
+    "equipment": {
+      "title": "装备准备",
+      "path": "assets/workbuddy-fishing-guide-equipment@2x.png",
+      "keywords": ["装备", "工具", "钓竿", "鱼竿", "竿", "钓线", "线", "钩", "虾钩", "水桶", "抄网", "剪刀"]
+    },
+    "bait": {
+      "title": "鸡肠子饵料",
+      "path": "assets/workbuddy-fishing-guide-bait@2x.png",
+      "keywords": ["鸡肠", "鸡肠子", "饵", "饵料", "挂钩", "穿钩", "香油", "诱饵", "腥味", "怎么挂"]
+    },
+    "position": {
+      "title": "钓位选择",
+      "path": "assets/workbuddy-fishing-guide-position@2x.png",
+      "keywords": ["钓位", "位置", "哪里", "在哪", "水草", "沟渠", "拐角", "阴凉", "进水口", "选点"]
+    },
+    "signal": {
+      "title": "咬钩信号",
+      "path": "assets/workbuddy-fishing-guide-signal@2x.png",
+      "keywords": ["咬钩", "信号", "看线", "线动", "什么时候提", "提早", "空钩", "抖", "走", "跑"]
+    },
+    "lift": {
+      "title": "提竿抄虾",
+      "path": "assets/workbuddy-fishing-guide-lift@2x.png",
+      "keywords": ["提竿", "提杆", "收线", "抄网", "怎么提", "怎么收", "出水", "夹住"]
+    },
+    "time": {
+      "title": "最佳时间",
+      "path": "assets/workbuddy-fishing-guide-time@2x.png",
+      "keywords": ["时间", "几点", "早上", "下午", "晚上", "天气", "黄金档", "15:00", "17:00"]
+    },
+    "mnemonic": {
+      "title": "钓虾口诀",
+      "path": "assets/workbuddy-fishing-guide-mnemonic@2x.png",
+      "keywords": ["口诀", "七字诀", "速记", "记法", "新手", "步骤", "站抛等提抄摘养"]
+    },
+    "safety": {
+      "title": "安全提醒",
+      "path": "assets/workbuddy-fishing-guide-safety@2x.png",
+      "keywords": ["安全", "亲子", "小朋友", "孩子", "被夹", "夹手", "雷雨", "环保", "垃圾", "注意"]
+    }
+  }
+}

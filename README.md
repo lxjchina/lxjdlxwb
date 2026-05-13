@@ -25,6 +25,7 @@ lxjdlxwb/
 │   ├── build-workbuddy-guide.py      # 重建自包含 HTML 模板（内联 logo）
 │   ├── generate-guide-v3.py        # PNG 生成脚本（Pillow 版）
 │   ├── generate-reliable.py         # WorkBuddy 一键校验 + 高清生成脚本
+│   ├── select-guide-image.py        # 快速选择兜底图（线上推荐，无 Chrome 依赖）
 │   ├── html-to-png.py              # Chrome Headless 2x 截图脚本
 │   ├── validate-workbuddy-assets.py # HTML/PNG 完整性校验脚本
 │   └── generate-topic-html.py      # 旧版分主题生成工具（保留作兼容）
@@ -65,7 +66,18 @@ cp -r lxjdlxwb/ <项目路径>/.workbuddy/skills/
 需要的话，我也可以给你生成一张对应主题的钓虾教学图。
 ```
 
-用户明确说「生成图片」「做一张」「发图」「要图片」「生成教学图」后，再使用下面的图片生成命令。不要用通用 AI 图片请求替代脚本生成，否则容易出现 680px 低清图、文字糊或版式失控。
+用户明确说「生成图片」「做一张」「发图」「要图片」「生成教学图」后，线上优先走快速兜底图，不要用通用 AI 图片请求，不要默认运行 Chromium 截图。
+
+### 快速稳定返回图片（线上推荐）
+
+```bash
+python3 scripts/select-guide-image.py --text "鸡肠子怎么挂钩，生成图片"
+# 输出：assets/workbuddy-fishing-guide-bait@2x.png
+
+python3 scripts/select-guide-image.py --text "什么时候提竿" --json
+```
+
+该脚本不启动 Chrome，不依赖 Pillow，只按用户问题选择已生成的 1360px 高清 PNG。WorkBuddy 拿到路径后直接发送图片。
 
 如果 WorkBuddy 云上环境不能执行脚本或没有 Chrome，直接发送仓库内置成品图：
 
@@ -81,7 +93,7 @@ assets/workbuddy-fishing-guide-mnemonic@2x.png
 assets/workbuddy-fishing-guide-safety@2x.png
 ```
 
-### 生成 WorkBuddy 高清教学图
+### 重新生成 WorkBuddy 高清教学图（本地开发/更新素材）
 
 运行可靠生成脚本，会先按主题重建 HTML，再校验资源、导出 2x PNG，最后校验 PNG 是否清晰完整。
 
